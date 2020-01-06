@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbs.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.bbs.pojo.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="loginname" jdbcType="VARCHAR" property="loginname"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="birthday" jdbcType="VARCHAR" property="birthday"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="motto" jdbcType="VARCHAR" property="motto"/>
+        <result column="createtime" jdbcType="VARCHAR" property="createtime"/>
+        <result column="lastlogintime" jdbcType="VARCHAR" property="lastlogintime"/>
+        <result column="regist_ip" jdbcType="VARCHAR" property="registIp"/>
+        <result column="login_ip" jdbcType="VARCHAR" property="loginIp"/>
+        <result column="flag" jdbcType="INTEGER" property="flag"/>
+        <result column="score" jdbcType="INTEGER" property="score"/>
+        <result column="onlinetime" jdbcType="INTEGER" property="onlinetime"/>
+        <result column="cookieid" jdbcType="VARCHAR" property="cookieid"/>
+        <result column="salt" jdbcType="VARCHAR" property="salt"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, name, loginname, password, avatar, email, birthday, sex, mobile, motto, createtime, 
+    lastlogintime, regist_ip, login_ip, flag, score, onlinetime, cookieid, salt
+  </sql>
+    <select id="selectByExample" parameterType="com.bbs.pojo.UserExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.bbs.pojo.UserExample">
+        delete from user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.bbs.pojo.User">
+    insert into user (id, name, loginname, 
+      password, avatar, email, 
+      birthday, sex, mobile, 
+      motto, createtime, lastlogintime, 
+      regist_ip, login_ip, flag, 
+      score, onlinetime, cookieid, 
+      salt)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{motto,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, #{lastlogintime,jdbcType=VARCHAR}, 
+      #{registIp,jdbcType=VARCHAR}, #{loginIp,jdbcType=VARCHAR}, #{flag,jdbcType=INTEGER}, 
+      #{score,jdbcType=INTEGER}, #{onlinetime,jdbcType=INTEGER}, #{cookieid,jdbcType=VARCHAR}, 
+      #{salt,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.bbs.pojo.User" useGeneratedKeys="true" keyProperty="id">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="loginname != null">
+                loginname,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="motto != null">
+                motto,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test="lastlogintime != null">
+                lastlogintime,
+            </if>
+            <if test="registIp != null">
+                regist_ip,
+            </if>
+            <if test="loginIp != null">
+                login_ip,
+            </if>
+            <if test="flag != null">
+                flag,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+            <if test="onlinetime != null">
+                onlinetime,
+            </if>
+            <if test="cookieid != null">
+                cookieid,
+            </if>
+            <if test="salt != null">
+                salt,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="loginname != null">
+                #{loginname,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="motto != null">
+                #{motto,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=VARCHAR},
+            </if>
+            <if test="lastlogintime != null">
+                #{lastlogintime,jdbcType=VARCHAR},
+            </if>
+            <if test="registIp != null">
+                #{registIp,jdbcType=VARCHAR},
+            </if>
+            <if test="loginIp != null">
+                #{loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                #{flag,jdbcType=INTEGER},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=INTEGER},
+            </if>
+            <if test="onlinetime != null">
+                #{onlinetime,jdbcType=INTEGER},
+            </if>
+            <if test="cookieid != null">
+                #{cookieid,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                #{salt,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.bbs.pojo.UserExample" resultType="java.lang.Long">
+        select count(*) from user
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update user
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.name != null">
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.loginname != null">
+                loginname = #{record.loginname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.password != null">
+                password = #{record.password,jdbcType=VARCHAR},
+            </if>
+            <if test="record.avatar != null">
+                avatar = #{record.avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="record.email != null">
+                email = #{record.email,jdbcType=VARCHAR},
+            </if>
+            <if test="record.birthday != null">
+                birthday = #{record.birthday,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sex != null">
+                sex = #{record.sex,jdbcType=VARCHAR},
+            </if>
+            <if test="record.mobile != null">
+                mobile = #{record.mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="record.motto != null">
+                motto = #{record.motto,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createtime != null">
+                createtime = #{record.createtime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.lastlogintime != null">
+                lastlogintime = #{record.lastlogintime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.registIp != null">
+                regist_ip = #{record.registIp,jdbcType=VARCHAR},
+            </if>
+            <if test="record.loginIp != null">
+                login_ip = #{record.loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="record.flag != null">
+                flag = #{record.flag,jdbcType=INTEGER},
+            </if>
+            <if test="record.score != null">
+                score = #{record.score,jdbcType=INTEGER},
+            </if>
+            <if test="record.onlinetime != null">
+                onlinetime = #{record.onlinetime,jdbcType=INTEGER},
+            </if>
+            <if test="record.cookieid != null">
+                cookieid = #{record.cookieid,jdbcType=VARCHAR},
+            </if>
+            <if test="record.salt != null">
+                salt = #{record.salt,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update user
+        set id = #{record.id,jdbcType=INTEGER},
+        name = #{record.name,jdbcType=VARCHAR},
+        loginname = #{record.loginname,jdbcType=VARCHAR},
+        password = #{record.password,jdbcType=VARCHAR},
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+        email = #{record.email,jdbcType=VARCHAR},
+        birthday = #{record.birthday,jdbcType=VARCHAR},
+        sex = #{record.sex,jdbcType=VARCHAR},
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+        motto = #{record.motto,jdbcType=VARCHAR},
+        createtime = #{record.createtime,jdbcType=VARCHAR},
+        lastlogintime = #{record.lastlogintime,jdbcType=VARCHAR},
+        regist_ip = #{record.registIp,jdbcType=VARCHAR},
+        login_ip = #{record.loginIp,jdbcType=VARCHAR},
+        flag = #{record.flag,jdbcType=INTEGER},
+        score = #{record.score,jdbcType=INTEGER},
+        onlinetime = #{record.onlinetime,jdbcType=INTEGER},
+        cookieid = #{record.cookieid,jdbcType=VARCHAR},
+        salt = #{record.salt,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.bbs.pojo.User">
+        update user
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="loginname != null">
+                loginname = #{loginname,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="motto != null">
+                motto = #{motto,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                createtime = #{createtime,jdbcType=VARCHAR},
+            </if>
+            <if test="lastlogintime != null">
+                lastlogintime = #{lastlogintime,jdbcType=VARCHAR},
+            </if>
+            <if test="registIp != null">
+                regist_ip = #{registIp,jdbcType=VARCHAR},
+            </if>
+            <if test="loginIp != null">
+                login_ip = #{loginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                flag = #{flag,jdbcType=INTEGER},
+            </if>
+            <if test="score != null">
+                score = #{score,jdbcType=INTEGER},
+            </if>
+            <if test="onlinetime != null">
+                onlinetime = #{onlinetime,jdbcType=INTEGER},
+            </if>
+            <if test="cookieid != null">
+                cookieid = #{cookieid,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                salt = #{salt,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.bbs.pojo.User">
+    update user
+    set name = #{name,jdbcType=VARCHAR},
+      loginname = #{loginname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      motto = #{motto,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      lastlogintime = #{lastlogintime,jdbcType=VARCHAR},
+      regist_ip = #{registIp,jdbcType=VARCHAR},
+      login_ip = #{loginIp,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=INTEGER},
+      score = #{score,jdbcType=INTEGER},
+      onlinetime = #{onlinetime,jdbcType=INTEGER},
+      cookieid = #{cookieid,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="findPageCount" parameterType="PageBean" resultType="integer">
+        SELECT
+        COUNT(*)
+        FROM
+        user t1
+        LEFT JOIN user_role t2
+        ON t1.id = t2.userid
+        LEFT JOIN role t3
+        ON t2.roleid = t3.id
+        WHERE 1 = 1
+        <if test="bean.id != null and bean.id !=''">
+            and t1.id = #{bean.id,jdbcType=INTEGER}
+        </if>
+        <if test="bean.name != null and bean.name !=''">
+            and t1.name like '%${bean.name}%'
+        </if>
+        <if test="bean.loginname != null and bean.loginname !=''">
+            and t1.loginname = #{bean.loginname,jdbcType=VARCHAR}
+            and t1.flag = #{bean.flag,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="findPage" resultType="user" parameterType="PageBean" >
+        SELECT
+        t1.id, t1.name, t1.loginname,
+        t1.avatar, t1.email,
+        t1.birthday, t1.sex, t1.mobile,
+        t1.createtime, t1.lastlogintime,
+        t1.regist_ip registIp, t1.login_ip loginIp, t1.flag,
+        t3.rolename roleName,
+        t3.id roleId
+        FROM
+        user t1
+        LEFT JOIN user_role t2
+        ON t1.id = t2.userid
+        LEFT JOIN role t3
+        ON t2.roleid = t3.id
+        WHERE 1 = 1
+        <if test="bean.id != null and bean.id !=''" >
+            and t1.id = #{bean.id,jdbcType=INTEGER}
+        </if>
+        <if test="bean.name != null and bean.name !=''" >
+            and t1.name like '%${bean.name}%'
+        </if>
+        <if test="bean.loginname != null and bean.loginname !=''" >
+            and t1.loginname like '%${bean.loginname}%'
+        </if>
+        <if test="bean.flag != null and bean.flag !=''" >
+            and t1.flag = #{bean.flag,jdbcType=INTEGER}
+        </if>
+        ORDER BY t1.id desc
+        LIMIT ${pageNo}, ${pageSize}
+    </select>
+</mapper>

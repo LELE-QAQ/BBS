@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbs.dao.ReplyMapper">
+  <resultMap id="BaseResultMap" type="com.bbs.pojo.Reply">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="postid" jdbcType="INTEGER" property="postid" />
+    <result column="replyid" jdbcType="INTEGER" property="replyid" />
+    <result column="contenthtml" jdbcType="VARCHAR" property="contenthtml" />
+    <result column="contenttxt" jdbcType="VARCHAR" property="contenttxt" />
+    <result column="createtime" jdbcType="VARCHAR" property="createtime" />
+    <result column="createuserid" jdbcType="INTEGER" property="createuserid" />
+    <result column="lastupdate" jdbcType="VARCHAR" property="lastupdate" />
+    <result column="isdel" jdbcType="BIT" property="isdel" />
+    <result column="orderby" jdbcType="INTEGER" property="orderby" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, postid, replyid, contenthtml, contenttxt, createtime, createuserid, lastupdate, 
+    isdel, orderby
+  </sql>
+  <select id="selectByExample" parameterType="com.bbs.pojo.ReplyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from reply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from reply
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from reply
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bbs.pojo.ReplyExample">
+    delete from reply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bbs.pojo.Reply">
+    insert into reply (id, postid, replyid, 
+      contenthtml, contenttxt, createtime, 
+      createuserid, lastupdate, isdel, 
+      orderby)
+    values (#{id,jdbcType=INTEGER}, #{postid,jdbcType=INTEGER}, #{replyid,jdbcType=INTEGER}, 
+      #{contenthtml,jdbcType=VARCHAR}, #{contenttxt,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, 
+      #{createuserid,jdbcType=INTEGER}, #{lastupdate,jdbcType=VARCHAR}, #{isdel,jdbcType=BIT}, 
+      #{orderby,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bbs.pojo.Reply">
+    insert into reply
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="postid != null">
+        postid,
+      </if>
+      <if test="replyid != null">
+        replyid,
+      </if>
+      <if test="contenthtml != null">
+        contenthtml,
+      </if>
+      <if test="contenttxt != null">
+        contenttxt,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="createuserid != null">
+        createuserid,
+      </if>
+      <if test="lastupdate != null">
+        lastupdate,
+      </if>
+      <if test="isdel != null">
+        isdel,
+      </if>
+      <if test="orderby != null">
+        orderby,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="postid != null">
+        #{postid,jdbcType=INTEGER},
+      </if>
+      <if test="replyid != null">
+        #{replyid,jdbcType=INTEGER},
+      </if>
+      <if test="contenthtml != null">
+        #{contenthtml,jdbcType=VARCHAR},
+      </if>
+      <if test="contenttxt != null">
+        #{contenttxt,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="createuserid != null">
+        #{createuserid,jdbcType=INTEGER},
+      </if>
+      <if test="lastupdate != null">
+        #{lastupdate,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        #{isdel,jdbcType=BIT},
+      </if>
+      <if test="orderby != null">
+        #{orderby,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bbs.pojo.ReplyExample" resultType="java.lang.Long">
+    select count(*) from reply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update reply
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.postid != null">
+        postid = #{record.postid,jdbcType=INTEGER},
+      </if>
+      <if test="record.replyid != null">
+        replyid = #{record.replyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.contenthtml != null">
+        contenthtml = #{record.contenthtml,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contenttxt != null">
+        contenttxt = #{record.contenttxt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createuserid != null">
+        createuserid = #{record.createuserid,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastupdate != null">
+        lastupdate = #{record.lastupdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdel != null">
+        isdel = #{record.isdel,jdbcType=BIT},
+      </if>
+      <if test="record.orderby != null">
+        orderby = #{record.orderby,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update reply
+    set id = #{record.id,jdbcType=INTEGER},
+      postid = #{record.postid,jdbcType=INTEGER},
+      replyid = #{record.replyid,jdbcType=INTEGER},
+      contenthtml = #{record.contenthtml,jdbcType=VARCHAR},
+      contenttxt = #{record.contenttxt,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=VARCHAR},
+      createuserid = #{record.createuserid,jdbcType=INTEGER},
+      lastupdate = #{record.lastupdate,jdbcType=VARCHAR},
+      isdel = #{record.isdel,jdbcType=BIT},
+      orderby = #{record.orderby,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bbs.pojo.Reply">
+    update reply
+    <set>
+      <if test="postid != null">
+        postid = #{postid,jdbcType=INTEGER},
+      </if>
+      <if test="replyid != null">
+        replyid = #{replyid,jdbcType=INTEGER},
+      </if>
+      <if test="contenthtml != null">
+        contenthtml = #{contenthtml,jdbcType=VARCHAR},
+      </if>
+      <if test="contenttxt != null">
+        contenttxt = #{contenttxt,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="createuserid != null">
+        createuserid = #{createuserid,jdbcType=INTEGER},
+      </if>
+      <if test="lastupdate != null">
+        lastupdate = #{lastupdate,jdbcType=VARCHAR},
+      </if>
+      <if test="isdel != null">
+        isdel = #{isdel,jdbcType=BIT},
+      </if>
+      <if test="orderby != null">
+        orderby = #{orderby,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bbs.pojo.Reply">
+    update reply
+    set postid = #{postid,jdbcType=INTEGER},
+      replyid = #{replyid,jdbcType=INTEGER},
+      contenthtml = #{contenthtml,jdbcType=VARCHAR},
+      contenttxt = #{contenttxt,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      createuserid = #{createuserid,jdbcType=INTEGER},
+      lastupdate = #{lastupdate,jdbcType=VARCHAR},
+      isdel = #{isdel,jdbcType=BIT},
+      orderby = #{orderby,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findPageCount" resultType="java.lang.Integer" parameterType="map" >
+   SELECT
+	  COUNT(1)
+	FROM
+	  reply t1
+	  LEFT JOIN USER t2
+	    ON t1.createuserid = t2.id
+	  LEFT JOIN user_role t3
+	    ON t2.id = t3.userid
+	  LEFT JOIN role t4
+	    ON t4.id = t3.roleid
+     LEFT JOIN reply pt1
+  	    ON t1.replyid = pt1.id
+     LEFT JOIN USER pt2
+        ON pt1.createuserid = pt2.id
+    where t1.postid = #{bean.id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findPage" resultType="map" parameterType="map" >
+    SELECT
+	  t1.id,
+	  t1.postid,
+	  t1.replyid,
+	  t1.contenthtml,
+	  t1.contenttxt,
+	  t1.createtime,
+	  t1.createuserid,
+	  t1.lastupdate,
+	  t1.isdel,
+	  t1.orderby,
+	  t2.id userid,
+	  t2.loginname,
+	  t2. avatar,
+	  (SELECT
+	    COUNT(1)
+	  FROM
+	    post tt3
+	  WHERE tt3.createuserid = t2.id) postCount,
+	  (SELECT
+	    COUNT(1)
+	  FROM
+	    reply tt4
+	  WHERE tt4.createuserid = t2.id) userReplyCount,
+	  t4.rolename,
+	  t4.id roleId ,
+	  pt1.contenthtml pcontenthtml,
+	  pt1.createtime pcreatetime,
+	  pt1.orderby porderby,
+	  pt1.isdel pisdel,
+	  pt2.loginname ploginname
+	FROM
+	  reply t1
+	  LEFT JOIN user t2
+	    ON t1.createuserid = t2.id
+	  LEFT JOIN user_role t3
+	    ON t2.id = t3.userid
+	  LEFT JOIN role t4
+	    ON t4.id = t3.roleid
+			LEFT JOIN reply pt1
+	    ON t1.replyid = pt1.id
+	  LEFT JOIN user pt2
+	    ON pt1.createuserid = pt2.id
+    where t1.postid  =  #{bean.id,jdbcType=INTEGER}
+    order by t1.orderby ${bean.orderby}
+    LIMIT ${pageNo}, ${pageSize}
+  </select>
+
+  <delete id="deleteByPostId" parameterType="int">
+    delete from reply where postid = #{id,jdbcType=INTEGER}
+  </delete>
+</mapper>

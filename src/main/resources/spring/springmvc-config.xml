@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <!--扫描controller-->
+    <context:component-scan base-package="com.bbs.*" use-default-filters="false">
+
+        <!--这样就会只扫描base-package指定下的有@Controller下的Java类，并注册成bean-->
+        <!--一般会导致一个常见的错误，那就是事务不起作用，补救的方法是添加use-default-filters=”false”-->
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+
+        <!--不扫描controller注解-->
+        <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />-->
+    </context:component-scan>
+
+
+    <mvc:annotation-driven/>
+    <mvc:default-servlet-handler/>
+
+    <!-- 启用注解功能 -->
+    <!--此配置是向Spring容器中注册声明以下4个BeanPostProcessor（bean处理器）：
+    AutowiredAnnotationBeanPostProcessor//可使用@Autowired注解
+    CommonAnnotationBeanPostProcessor// 可使用@Resource、@PostConstruct、@PreDestroy等注解
+    PersistenceAnnotationBeanPostProcessor//可使用@PersistenceContext注解
+    RequiredAnnotationBeanPostProcessor// 可使用@Required注解-->
+    <context:annotation-config></context:annotation-config>
+
+    <!--视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 该文件上传的视图解析器的id必须配，而且id的值是multipartResolver -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="104857600"/>
+        <property name="maxInMemorySize" value="4096"/>
+    </bean>
+
+    <!-- 字符串字符编码转换 -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>application/json;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+</beans>

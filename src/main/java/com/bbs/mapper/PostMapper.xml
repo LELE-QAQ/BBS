@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbs.dao.PostMapper">
+    <resultMap id="BaseResultMap" type="com.bbs.pojo.Post">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="contenthtml" jdbcType="VARCHAR" property="contenthtml"/>
+        <result column="contenttxt" jdbcType="VARCHAR" property="contenttxt"/>
+        <result column="createtime" jdbcType="VARCHAR" property="createtime"/>
+        <result column="createuserid" jdbcType="INTEGER" property="createuserid"/>
+        <result column="sectionid" jdbcType="INTEGER" property="sectionid"/>
+        <result column="themeid" jdbcType="INTEGER" property="themeid"/>
+        <result column="lastupdate" jdbcType="VARCHAR" property="lastupdate"/>
+        <result column="excellent" jdbcType="VARCHAR" property="excellent"/>
+        <result column="top" jdbcType="VARCHAR" property="top"/>
+        <result column="view" jdbcType="INTEGER" property="view"/>
+        <result column="replyid" jdbcType="INTEGER" property="replyid"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, name, contenthtml, contenttxt, createtime, createuserid, sectionid, themeid, 
+    lastupdate, excellent, top, view, replyid
+  </sql>
+    <select id="selectByExample" parameterType="com.bbs.pojo.PostExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from post
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from post
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from post
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.bbs.pojo.PostExample">
+        delete from post
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.bbs.pojo.Post">
+    insert into post (id, name, contenthtml, 
+      contenttxt, createtime, createuserid, 
+      sectionid, themeid, lastupdate, 
+      excellent, top, view, 
+      replyid)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{contenthtml,jdbcType=VARCHAR}, 
+      #{contenttxt,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, #{createuserid,jdbcType=INTEGER}, 
+      #{sectionid,jdbcType=INTEGER}, #{themeid,jdbcType=INTEGER}, #{lastupdate,jdbcType=VARCHAR}, 
+      #{excellent,jdbcType=VARCHAR}, #{top,jdbcType=VARCHAR}, #{view,jdbcType=INTEGER}, 
+      #{replyid,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="com.bbs.pojo.Post">
+        insert into post
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="contenthtml != null">
+                contenthtml,
+            </if>
+            <if test="contenttxt != null">
+                contenttxt,
+            </if>
+            <if test="createtime != null">
+                createtime,
+            </if>
+            <if test="createuserid != null">
+                createuserid,
+            </if>
+            <if test="sectionid != null">
+                sectionid,
+            </if>
+            <if test="themeid != null">
+                themeid,
+            </if>
+            <if test="lastupdate != null">
+                lastupdate,
+            </if>
+            <if test="excellent != null">
+                excellent,
+            </if>
+            <if test="top != null">
+                top,
+            </if>
+            <if test="view != null">
+                view,
+            </if>
+            <if test="replyid != null">
+                replyid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="contenthtml != null">
+                #{contenthtml,jdbcType=VARCHAR},
+            </if>
+            <if test="contenttxt != null">
+                #{contenttxt,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=VARCHAR},
+            </if>
+            <if test="createuserid != null">
+                #{createuserid,jdbcType=INTEGER},
+            </if>
+            <if test="sectionid != null">
+                #{sectionid,jdbcType=INTEGER},
+            </if>
+            <if test="themeid != null">
+                #{themeid,jdbcType=INTEGER},
+            </if>
+            <if test="lastupdate != null">
+                #{lastupdate,jdbcType=VARCHAR},
+            </if>
+            <if test="excellent != null">
+                #{excellent,jdbcType=VARCHAR},
+            </if>
+            <if test="top != null">
+                #{top,jdbcType=VARCHAR},
+            </if>
+            <if test="view != null">
+                #{view,jdbcType=INTEGER},
+            </if>
+            <if test="replyid != null">
+                #{replyid,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.bbs.pojo.PostExample" resultType="java.lang.Long">
+        select count(*) from post
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update post
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.name != null">
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.contenthtml != null">
+                contenthtml = #{record.contenthtml,jdbcType=VARCHAR},
+            </if>
+            <if test="record.contenttxt != null">
+                contenttxt = #{record.contenttxt,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createtime != null">
+                createtime = #{record.createtime,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createuserid != null">
+                createuserid = #{record.createuserid,jdbcType=INTEGER},
+            </if>
+            <if test="record.sectionid != null">
+                sectionid = #{record.sectionid,jdbcType=INTEGER},
+            </if>
+            <if test="record.themeid != null">
+                themeid = #{record.themeid,jdbcType=INTEGER},
+            </if>
+            <if test="record.lastupdate != null">
+                lastupdate = #{record.lastupdate,jdbcType=VARCHAR},
+            </if>
+            <if test="record.excellent != null">
+                excellent = #{record.excellent,jdbcType=VARCHAR},
+            </if>
+            <if test="record.top != null">
+                top = #{record.top,jdbcType=VARCHAR},
+            </if>
+            <if test="record.view != null">
+                view = #{record.view,jdbcType=INTEGER},
+            </if>
+            <if test="record.replyid != null">
+                replyid = #{record.replyid,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update post
+        set id = #{record.id,jdbcType=INTEGER},
+        name = #{record.name,jdbcType=VARCHAR},
+        contenthtml = #{record.contenthtml,jdbcType=VARCHAR},
+        contenttxt = #{record.contenttxt,jdbcType=VARCHAR},
+        createtime = #{record.createtime,jdbcType=VARCHAR},
+        createuserid = #{record.createuserid,jdbcType=INTEGER},
+        sectionid = #{record.sectionid,jdbcType=INTEGER},
+        themeid = #{record.themeid,jdbcType=INTEGER},
+        lastupdate = #{record.lastupdate,jdbcType=VARCHAR},
+        excellent = #{record.excellent,jdbcType=VARCHAR},
+        top = #{record.top,jdbcType=VARCHAR},
+        view = #{record.view,jdbcType=INTEGER},
+        replyid = #{record.replyid,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.bbs.pojo.Post">
+        update post
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="contenthtml != null">
+                contenthtml = #{contenthtml,jdbcType=VARCHAR},
+            </if>
+            <if test="contenttxt != null">
+                contenttxt = #{contenttxt,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                createtime = #{createtime,jdbcType=VARCHAR},
+            </if>
+            <if test="createuserid != null">
+                createuserid = #{createuserid,jdbcType=INTEGER},
+            </if>
+            <if test="sectionid != null">
+                sectionid = #{sectionid,jdbcType=INTEGER},
+            </if>
+            <if test="themeid != null">
+                themeid = #{themeid,jdbcType=INTEGER},
+            </if>
+            <if test="lastupdate != null">
+                lastupdate = #{lastupdate,jdbcType=VARCHAR},
+            </if>
+            <if test="excellent != null">
+                excellent = #{excellent,jdbcType=VARCHAR},
+            </if>
+            <if test="top != null">
+                top = #{top,jdbcType=VARCHAR},
+            </if>
+            <if test="view != null">
+                view = #{view,jdbcType=INTEGER},
+            </if>
+            <if test="replyid != null">
+                replyid = #{replyid,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.bbs.pojo.Post">
+    update post
+    set name = #{name,jdbcType=VARCHAR},
+      contenthtml = #{contenthtml,jdbcType=VARCHAR},
+      contenttxt = #{contenttxt,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      createuserid = #{createuserid,jdbcType=INTEGER},
+      sectionid = #{sectionid,jdbcType=INTEGER},
+      themeid = #{themeid,jdbcType=INTEGER},
+      lastupdate = #{lastupdate,jdbcType=VARCHAR},
+      excellent = #{excellent,jdbcType=VARCHAR},
+      top = #{top,jdbcType=VARCHAR},
+      view = #{view,jdbcType=INTEGER},
+      replyid = #{replyid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="findById" resultType="map" parameterType="post">
+
+        SELECT
+        t1.id,
+        t1.name,
+        t1.createtime,
+        t1.createuserid,
+        t1.sectionid,
+        t1.contenthtml,
+        t1.contenttxt,
+        t1.excellent,
+        t1.top,
+        t1.view,
+        t1.replyid,
+        t1.lastupdate,
+        t3.id subSectionId,
+        t3.shorthand subShorthand,
+        t3.name subSectionName,
+        t3.findgroup,
+        t3.postgroup,
+        t3.replygroup,
+        t4.id fatherSectionId,
+        t4.shorthand subShorthand,
+        t4.name fatherSectionName,
+        t2.id userid,
+        t2.loginname,
+        t2.avatar avatar,
+        (SELECT
+        COUNT(1)
+        FROM
+        reply
+        WHERE createuserid = t2.id) userReplyCount,
+        (SELECT
+        COUNT(1)
+        FROM
+        post tt3
+        WHERE tt3.createuserid = t2.id) postCount,
+        (SELECT
+        COUNT(1)
+        FROM
+        reply
+        WHERE postid = t1.id) replyCount,
+        t6.rolename,
+        t6.id roleId,
+        t7.name themeName,
+        t7.id themeId
+        FROM
+        post t1
+        LEFT JOIN USER t2
+        ON t1.createuserid = t2.id
+        LEFT JOIN section t3
+        ON t1.sectionid = t3.id
+        LEFT JOIN section t4
+        ON t4.id = t3.parentid
+        LEFT JOIN user_role t5
+        ON t2.id = t5.userid
+        LEFT JOIN role t6
+        ON t6.id = t5.roleid
+        LEFT JOIN theme t7
+        ON t1.themeid = t7.id
+        WHERE 1 = 1
+        <if test="id != null">
+            and t1.id = #{id,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <!-- 查询总条数 -->
+    <select id="findPageCount" resultType="java.lang.Integer" parameterType="post">
+        select count(*)
+        from
+        post t1
+        LEFT JOIN theme t2 ON t1.themeid = t2.id
+        LEFT JOIN section t3 ON t3.id=t1.sectionid
+        LEFT JOIN reply t5
+        ON t5.id = t1.replyid
+        LEFT JOIN user t6
+        ON t5.createuserid = t6.id
+        LEFT JOIN user t7
+        ON t1.createuserid = t7.id
+        where 1=1
+        <if test="bean.sectionid != null">
+            and t1.sectionid = #{bean.sectionid,jdbcType=INTEGER}
+        </if>
+        <if test="bean.themeid != null">
+            and t1.themeid = #{bean.themeid,jdbcType=INTEGER}
+        </if>
+        <if test="bean.createuserid != null">
+            and t1.createuserid = #{bean.createuserid,jdbcType=INTEGER}
+        </if>
+    </select>
+
+
+    <!-- 分页查询 -->
+    <select id="findPage" resultType="post" parameterType="post">
+        SELECT
+        t5.createtime replyCreateTime,
+        t6.id replyUserId,
+        t6.loginname replyUserName,
+        t7.id postUserId,
+        t7.loginname postUserName,
+        t7.avatar postUserImage,
+        t1.id,
+        t1.name,
+        t1.createtime,
+        t1.createuserid,
+        t1.sectionid sectionId,
+        t1.contenthtml,
+        t1.contenttxt,
+        t1.excellent,
+        t1.top,
+        t1.view,
+        t1.replyid ,
+        t2.name themeName ,
+        t3.name sectionName ,
+        t3.shorthand shorthand ,
+        (SELECT COUNT(1) FROM reply WHERE postid = t1.id ) replyCount
+        FROM
+        post t1
+        LEFT JOIN theme t2 ON t1.themeid = t2.id
+        LEFT JOIN section t3 ON t3.id=t1.sectionid
+        LEFT JOIN reply t5
+        ON t5.id = t1.replyid
+        LEFT JOIN user t6
+        ON t5.createuserid = t6.id
+        LEFT JOIN user t7
+        ON t1.createuserid = t7.id
+        where 1=1
+        <if test="bean.sectionid != null">
+            and t1.sectionid = #{bean.sectionid,jdbcType=INTEGER}
+        </if>
+        <if test="bean.themeid != null">
+            and t1.themeid = #{bean.themeid,jdbcType=INTEGER}
+        </if>
+        <if test="bean.createuserid != null">
+            and t1.createuserid = #{bean.createuserid,jdbcType=INTEGER}
+        </if>
+        <!-- 板块页面排序使用 -->
+        <if test="bean.orderby != null">
+            ORDER BY ${bean.orderby} desc
+        </if>
+        <if test="bean.orderby == null">
+            ORDER BY t1.id desc
+        </if>
+
+        LIMIT ${pageNo}, ${pageSize}
+    </select>
+
+    <!-- 查询当日总条数 -->
+    <select id="findCount" resultType="java.lang.Integer" parameterType="post">
+        select count(*)
+        from post t1
+        where 1=1
+        <if test="sectionid != null">
+            and t1.sectionid = #{sectionid,jdbcType=INTEGER}
+        </if>
+        <if test="createtime != null">
+            and t1.createtime > '${createtime}'
+        </if>
+    </select>
+
+    <select id="findByPost" parameterType="post" resultType="post">
+        SELECT
+        t1.id,
+        t1.NAME,
+        t1.contenthtml,
+        t1.contenttxt,
+        t1.createtime,
+        t1.createuserid,
+        t1.sectionid sectionId,
+        t1.themeid,
+        t1.lastupdate,
+        t1.excellent,
+        t1.top,
+        t1.view,
+        t1.replyid,
+        t2.name sectionName,
+        t3.name themeName
+        FROM
+        post t1
+        left join section t2 on t1.sectionid=t2.id
+        left join theme t3 on t1.themeid=t3.id
+        where 1=1
+        <if test="id != null">
+            and t1.id = #{id,jdbcType=INTEGER}
+        </if>
+        <if test="name != null">
+            and t1.name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="createuserid != null">
+            and t1.createuserid = #{createuserid,jdbcType=INTEGER}
+        </if>
+        <if test="createtime != null">
+            and t1.createtime = #{createtime,jdbcType=INTEGER}
+        </if>
+        <if test="sectionid != null">
+            and t1.sectionid = #{sectionid,jdbcType=INTEGER}
+        </if>
+        <if test="createuserid != null">
+            and t1.createuserid = #{createuserid,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="findTopList" parameterType="int" resultType="post">
+       SELECT
+   	  t5.createtime replyCreateTime,
+	  t6.id replyUserId,
+	  t6.loginname replyUserName,
+	  t7.id postUserId,
+	  t7.loginname postUserName,
+	  t7.avatar postUserImage,
+	  t1.id,
+	  t1.name,
+	  t1.createtime,
+	  t1.createuserid,
+	  t1.sectionid sectionId,
+	  t1.contenthtml,
+	  t1.contenttxt,
+	  t1.excellent,
+	  t1.top,
+	  t1.view,
+	  t1.replyid ,
+	  (SELECT COUNT(1) FROM reply WHERE postid = t1.id ) replyCount
+	  FROM
+	  post t1
+	  LEFT JOIN reply t5
+      ON  t5.id = t1.replyid
+        LEFT JOIN user t6
+        ON t5.createuserid = t6.id
+      LEFT JOIN user t7
+        ON t1.createuserid = t7.id
+          where sectionid =  #{sectionId,jdbcType=INTEGER} and top BETWEEN '1' and '2'
+    </select>
+</mapper>

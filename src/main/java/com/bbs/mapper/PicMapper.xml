@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bbs.dao.PicMapper">
+    <resultMap id="BaseResultMap" type="com.bbs.pojo.Pic">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="path" jdbcType="VARCHAR" property="path"/>
+        <result column="postid" jdbcType="INTEGER" property="postid"/>
+        <result column="sectionid" jdbcType="INTEGER" property="sectionid"/>
+        <result column="pictype" jdbcType="VARCHAR" property="pictype"/>
+        <result column="createuserid" jdbcType="INTEGER" property="createuserid"/>
+        <result column="width" jdbcType="INTEGER" property="width"/>
+        <result column="height" jdbcType="INTEGER" property="height"/>
+        <result column="isdel" jdbcType="BIT" property="isdel"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, path, postid, sectionid, pictype, createuserid, width, height, isdel
+  </sql>
+    <select id="selectByExample" parameterType="com.bbs.pojo.PicExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from pic
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pic
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pic
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.bbs.pojo.PicExample">
+        delete from pic
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.bbs.pojo.Pic">
+    insert into pic (id, path, postid, 
+      sectionid, pictype, createuserid, 
+      width, height, isdel)
+    values (#{id,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{postid,jdbcType=INTEGER}, 
+      #{sectionid,jdbcType=INTEGER}, #{pictype,jdbcType=VARCHAR}, #{createuserid,jdbcType=INTEGER}, 
+      #{width,jdbcType=INTEGER}, #{height,jdbcType=INTEGER}, #{isdel,jdbcType=BIT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.bbs.pojo.Pic">
+        insert into pic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="path != null">
+                path,
+            </if>
+            <if test="postid != null">
+                postid,
+            </if>
+            <if test="sectionid != null">
+                sectionid,
+            </if>
+            <if test="pictype != null">
+                pictype,
+            </if>
+            <if test="createuserid != null">
+                createuserid,
+            </if>
+            <if test="width != null">
+                width,
+            </if>
+            <if test="height != null">
+                height,
+            </if>
+            <if test="isdel != null">
+                isdel,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="path != null">
+                #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="postid != null">
+                #{postid,jdbcType=INTEGER},
+            </if>
+            <if test="sectionid != null">
+                #{sectionid,jdbcType=INTEGER},
+            </if>
+            <if test="pictype != null">
+                #{pictype,jdbcType=VARCHAR},
+            </if>
+            <if test="createuserid != null">
+                #{createuserid,jdbcType=INTEGER},
+            </if>
+            <if test="width != null">
+                #{width,jdbcType=INTEGER},
+            </if>
+            <if test="height != null">
+                #{height,jdbcType=INTEGER},
+            </if>
+            <if test="isdel != null">
+                #{isdel,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.bbs.pojo.PicExample" resultType="java.lang.Long">
+        select count(*) from pic
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update pic
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.path != null">
+                path = #{record.path,jdbcType=VARCHAR},
+            </if>
+            <if test="record.postid != null">
+                postid = #{record.postid,jdbcType=INTEGER},
+            </if>
+            <if test="record.sectionid != null">
+                sectionid = #{record.sectionid,jdbcType=INTEGER},
+            </if>
+            <if test="record.pictype != null">
+                pictype = #{record.pictype,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createuserid != null">
+                createuserid = #{record.createuserid,jdbcType=INTEGER},
+            </if>
+            <if test="record.width != null">
+                width = #{record.width,jdbcType=INTEGER},
+            </if>
+            <if test="record.height != null">
+                height = #{record.height,jdbcType=INTEGER},
+            </if>
+            <if test="record.isdel != null">
+                isdel = #{record.isdel,jdbcType=BIT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update pic
+        set id = #{record.id,jdbcType=INTEGER},
+        path = #{record.path,jdbcType=VARCHAR},
+        postid = #{record.postid,jdbcType=INTEGER},
+        sectionid = #{record.sectionid,jdbcType=INTEGER},
+        pictype = #{record.pictype,jdbcType=VARCHAR},
+        createuserid = #{record.createuserid,jdbcType=INTEGER},
+        width = #{record.width,jdbcType=INTEGER},
+        height = #{record.height,jdbcType=INTEGER},
+        isdel = #{record.isdel,jdbcType=BIT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.bbs.pojo.Pic">
+        update pic
+        <set>
+            <if test="path != null">
+                path = #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="postid != null">
+                postid = #{postid,jdbcType=INTEGER},
+            </if>
+            <if test="sectionid != null">
+                sectionid = #{sectionid,jdbcType=INTEGER},
+            </if>
+            <if test="pictype != null">
+                pictype = #{pictype,jdbcType=VARCHAR},
+            </if>
+            <if test="createuserid != null">
+                createuserid = #{createuserid,jdbcType=INTEGER},
+            </if>
+            <if test="width != null">
+                width = #{width,jdbcType=INTEGER},
+            </if>
+            <if test="height != null">
+                height = #{height,jdbcType=INTEGER},
+            </if>
+            <if test="isdel != null">
+                isdel = #{isdel,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.bbs.pojo.Pic">
+    update pic
+    set path = #{path,jdbcType=VARCHAR},
+      postid = #{postid,jdbcType=INTEGER},
+      sectionid = #{sectionid,jdbcType=INTEGER},
+      pictype = #{pictype,jdbcType=VARCHAR},
+      createuserid = #{createuserid,jdbcType=INTEGER},
+      width = #{width,jdbcType=INTEGER},
+      height = #{height,jdbcType=INTEGER},
+      isdel = #{isdel,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <delete id="deleteByPostId" parameterType="int">
+    delete from pic where postid = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <select id="indexPic" resultType="pic">
+      SELECT
+        t1.*,t2.name postName
+        FROM pic t1 LEFT JOIN post t2 ON t1.postid=t2.id
+        WHERE t1.postid IS NOT NULL AND t1.width >= t1.height AND t1.pictype='0' AND t1.isdel='0' ORDER BY id DESC
+        LIMIT 0,5
+  </select>
+</mapper>
